@@ -15,8 +15,8 @@ public class Main {
 		
 		 // Gets and displays all the books from the database
 	    List<Book> books = bookEJB.findBooks();
-	    for (Book aBook : books) {
-	      System.out.println("--- " + aBook);
+	    for (Book book : books) {
+	      System.out.println(book);
 	    }
 
 	}
