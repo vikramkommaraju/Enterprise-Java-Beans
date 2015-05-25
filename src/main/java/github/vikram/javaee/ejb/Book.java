@@ -1,20 +1,29 @@
 package github.vikram.javaee.ejb;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 @Entity
 @NamedQuery(name = Book.FIND_ALL, query = "SELECT b from Book b")
 public class Book implements Serializable {
 	
 	public static final String FIND_ALL = "Book.FindAllBooks";
+	private static ValidatorFactory vf;
+	private static Validator validator;
 
 	@Id @GeneratedValue 
 	private Long id;
@@ -51,8 +60,42 @@ public class Book implements Serializable {
 		this.illustrations = illustrations;
 	}
 
+	
+	public void printViolations(Set<ConstraintViolation<Book>> violations) {
+		
+		
+		for(ConstraintViolation<Book> v : violations) {
+			System.out.println("####################");
+			System.out.println("Violation Property: " + v.getPropertyPath());
+			System.out.println("Violation Message: " + v.getMessage());
+			System.out.println("Violation Bean: " + v.getRootBean().getClass());
+			System.out.println("####################");
+		}
+		
+	}
 
+	@PrePersist
+	public void validateBook(){
+		vf = Validation.buildDefaultValidatorFactory();
+		validator = vf.getValidator();
+		System.out.println("Need to prepersist the book: " + this);
+		Set<ConstraintViolation<Book>> violations = validator.validate(this);
+		
+		if(violations.size() > 0) {
+			System.out.println("Validation of book failed in prepersist to DB!");
+			printViolations(violations);
+		}
+		
+		vf.close();
+	}
 
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", title=" + title + ", price=" + price
+				+ ", description=" + description + ", isbn=" + isbn
+				+ ", nbOfPage=" + nbOfPage + ", illustrations=" + illustrations
+				+ "]";
+	}
 
 	public Long getId() {
 		return id;

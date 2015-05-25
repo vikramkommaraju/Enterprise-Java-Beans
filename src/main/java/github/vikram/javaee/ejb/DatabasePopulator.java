@@ -30,11 +30,13 @@ public class DatabasePopulator {
 	@PostConstruct
 	private void populateDB() {
 		
-		book1 = new Book("Beginning Java EE 7", 35F, "Great Book", "1-8763-9125-7", 605, true);
-		book2 = new Book("The Lord of the Rings", 50.4F, "Adventure", "1-84023-742-2", 1216, true);
+		book1 = new Book("Beginning Java EE 7", 35F, "This is a great java book", "1-8763-9125-7", 605, true);
+		book2 = new Book("The Lord of the Rings", 50.4F, "This is a great adventure book", "1-84023-742-2", 1216, true);
 		
+		System.out.println("Creating 2 books...");
 		bookEJB.createBook(book1);
 		bookEJB.createBook(book2);
+		System.out.println("Created 2 books...");
 	}
 	
 	@PreDestroy
