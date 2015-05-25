@@ -1,0 +1,44 @@
+# Enterprise-Java-Beans
+Enterprise Java Beans using GlassFish Application Server and Java EE
+
+1. Changing server code and invoking the client without redeploying on server can cause issues with "Mismacthed serialization UIDs"
+
+Anytime you make a change to the code in entity class file or EJB class file or any file on the server side in general, you need to recompile and redeploy it to GF4 server. For example, 
+
+   If the EJB is accessed vi a remote interface on the client side as shown
+   
+   Context ctx = new InitialContext();
+		
+		BookEJBRemote bookEJB = (BookEJBRemote) ctx.lookup("java:global/ejb-0.0.1-SNAPSHOT/BookEJB!github.vikram.javaee.ejb.BookEJBRemote");
+		
+		 // Gets and displays all the books from the database
+	    List<Book> books = bookEJB.findBooks();
+	    for (Book book : books) {
+	      System.out.println(book);
+	    }
+	    
+	    This works and prints
+	    Book [id=152, title=The Lord of the Rings, price=50.4, description=This is a great adventure book, isbn=1-84023-742-2, nbOfPage=1216, illustrations=true]
+Book [id=151, title=Beginning Java EE 7, price=35.0, description=This is a great java book, isbn=1-8763-9125-7, nbOfPage=605, illustrations=true]
+
+Now, if you make a change to Book.java file like adding a new function or modiyfing existing code, you will see this error
+
+Caused by: java.io.IOException: Mismatched serialization UIDs : Source (Rep. IDRMI:github.vikram.javaee.ejb.Book:DB6A3664276623B4:AAD13B650A4D1A2A) = AAD13B650A4D1A2A whereas Target (Rep. ID RMI:github.vikram.javaee.ejb.Book:F5A5ACEEC94EB0ED:662510AC0F66866D) = 662510AC0F66866D
+	at com.sun.corba.ee.impl.util.RepositoryId.useFullValueDescription(RepositoryId.java:676)
+	at com.sun.corba.ee.impl.util.RepositoryId.useFullValueDescription(RepositoryId.java:636)
+	at com.sun.corba.ee.impl.io.ValueHandlerImpl.useFullValueDescription(ValueHandlerImpl.java:359)
+	at com.sun.corba.ee.impl.io.IIOPInputStream.simpleReadObject(IIOPInputStream.java:420)
+	at com.sun.corba.ee.impl.io.ValueHandlerImpl.readValueInternal(ValueHandlerImpl.java:307)
+	at com.sun.corba.ee.impl.io.ValueHandlerImpl.readValue(ValueHandlerImpl.java:273)
+	at com.sun.corba.ee.impl.encoding.CDRInputStream_1_0.readRMIIIOPValueType(CDRInputStream_1_0.java:903)
+	... 31 more
+	
+	So you will need to recompile and redeploy it to the server
+
+
+	    
+	    
+	    
+	   
+	    
+	    
