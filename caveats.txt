@@ -63,6 +63,16 @@ Caused by: java.io.IOException: Mismatched serialization UIDs : Source (Rep. IDR
   		asadmin
   		asadmin> stop-domain ejb
   		asadmin> delete-domin ejb (to permanently delete it)
+  		
+  6. Running integration test on Eclipse throws an error
+  
+  May 25, 2015 8:09:03 PM org.glassfish.deployment.admin.DeployCommand execute
+SEVERE: Exception while loading the app : CDI deployment failure:org.glassfish.weld.services.BootstrapConfigurationImpl.isNonPortableModeEnabled()Z
+java.lang.AbstractMethodError: org.glassfish.weld.services.BootstrapConfigurationImpl.isNonPortableModeEnabled()Z
+
+     To run the intergation test, use maven plugin command
+     
+     mvn interation-test (Config for this is in pom.xml)
   
   
 
