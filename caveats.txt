@@ -59,6 +59,11 @@ Caused by: java.io.IOException: Mismatched serialization UIDs : Source (Rep. IDR
   5. Integration test uses Embedded GlassFish. To run this, make sure no GlassFish server is already running on 4848.
   http://localhost:4848/
   
+  To stop existing server
+  		asadmin
+  		asadmin> stop-domain ejb
+  		asadmin> delete-domin ejb (to permanently delete it)
+  
   
 
 	    
