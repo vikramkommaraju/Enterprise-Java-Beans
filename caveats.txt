@@ -41,7 +41,7 @@ Caused by: java.io.IOException: Mismatched serialization UIDs : Source (Rep. IDR
 
 3. To run integration test that uses "Embedded EJB Container", you need to stop GlassFish server. Otherwise it complains saying address already in use.
 
-4. Need to be logged in as root to create new domain and prevent permission issues
+4. Need to be logged in as root to create new domain and prevent permission issues. (Depends on where GlassFish is installed. If its in /opt/ then you will to log in as root, else you dont need to)
 	sudo bash
 	asadmin
 		asadmin> create-domain ejb
