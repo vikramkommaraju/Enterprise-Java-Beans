@@ -40,6 +40,23 @@ Caused by: java.io.IOException: Mismatched serialization UIDs : Source (Rep. IDR
 2. Redploying server does not clear data in data source. Data remains persistent.
 
 3. To run integration test that uses "Embedded EJB Container", you need to stop GlassFish server. Otherwise it complains saying address already in use.
-	   
+
+4. Need to be logged in as root to create new domain and prevent permission issues
+	sudo bash
+	asadmin
+		asadmin> create-domain ejb
+	
+		Enter admin user name [Enter to accept default "admin" / no password]>
+		Bad Network Configuration.  DNS can not resolve the hostname: 
+		java.net.UnknownHostException: VKOMMARA-M-K0KJ: VKOMMARA-M-K0KJ: nodename nor servname provided, or not known
+		
+		Edit /etc/hosts and add the hostname
+		
+ 		127.0.0.1   VKOMMARA-M-K0KJ
+ 		
+ 		asadmin> start-domain ejb
+		
+Add hostname to /etc/hosts to prevent hostnotfound error while starting domain
+
 	    
 	    
