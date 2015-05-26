@@ -56,7 +56,10 @@ Caused by: java.io.IOException: Mismatched serialization UIDs : Source (Rep. IDR
  		
  		asadmin> start-domain ejb
 		
-Add hostname to /etc/hosts to prevent hostnotfound error while starting domain
+  5. Integration test uses Embedded GlassFish. To run this, make sure no GlassFish server is already running on 4848.
+  http://localhost:4848/
+  
+  
 
 	    
 	    
